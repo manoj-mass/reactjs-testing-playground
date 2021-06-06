@@ -1,24 +1,25 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import {getPost} from './Posts';
 
 function App() {
+  const [count , setCount] = useState(0);
+  const [title , setTitle] = useState('')
+
+  const getpost = () => {
+    getPost().then(res => setTitle(res.title));
+  }
   return (
+    <>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h1>Current count is - <label data-testid={"counterID"}>{count}</label></h1>
+        <button onClick={e => setCount(count + 1)}>Increment</button>
     </div>
+    <div className="App">
+    <h1>Title is - <label data-testid={"titleID"}>{title}</label></h1>
+    <button onClick={getpost}>Get Title</button>
+</div>
+</>
   );
 }
 
