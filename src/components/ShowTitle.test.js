@@ -1,8 +1,26 @@
 import { render, screen } from '@testing-library/react';
+import ShowTitle from './ShowTitle';
 import axios from 'axios';
 import { getPost } from '../apis/Posts';
 
+
+const setUp = () => render(<ShowTitle />);
+
+beforeEach(() => {
+    setUp()
+})
+
 describe('test post app', () => {
+    it('check post h1 available', () => {
+        const linkElement = screen.getByText(/Title is/i);
+        expect(linkElement).toBeInTheDocument();
+    });
+
+    it('check post button available', () => {
+        const linkElement = screen.getByText(/Get Title/i);
+        expect(linkElement).toBeInTheDocument();
+    });
+
     it('check get post', () => {
         jest.mock('axios');
         axios.get = jest.fn();
@@ -19,4 +37,3 @@ describe('test post app', () => {
         return getPost().then(data => expect(data.title).toEqual("sunt aut facere repellat provident occaecati excepturi optio reprehenderit"))
     });
 });
-
